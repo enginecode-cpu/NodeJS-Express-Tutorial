@@ -15,7 +15,7 @@ class ApiServer extends http.Server {
         this.config = config;
         this.app = app;
         this.currentConnection = new Set();
-        this.busy = WeakSet(); // 사용 중인 커넥션을 관리하기 위해서
+        this.busy = new WeakSet(); // 사용 중인 커넥션을 관리하기 위해서
         this.stopping = false; // 중단되어지는 과정인가
         this.app.static = static;
     }
@@ -36,19 +36,20 @@ class ApiServer extends http.Server {
             }
             next()
         })
+        
         /*
-        정적 파일이란?
-        이미지, 음성, 동영상 파일 등
-        자원에 사용되는 리소스 파일
+         정적 파일이란?
+         이미지, 음성, 동영상 파일 등
+         자원에 사용되는 리소스 파일
 
-        정적 파일을 핸들링하는 게 중요하다.
+         정적 파일을 핸들링하는 게 중요하다.
 
-        정적 파일은 Express에서 바로 서빙하는 것보다
-        리버스 프록시(nginx)를 통해서 서빙하는 것이 효율적이고 
-        퍼포먼스적인 측면에서 좋다.
+         정적 파일은 Express에서 바로 서빙하는 것보다
+         리버스 프록시(nginx)를 통해서 서빙하는 것이 효율적이고 
+         퍼포먼스적인 측면에서 좋다.
 
-        그럼에도 불구하고, Express에서 정적 파일을 처리해야하는 경우에
-        코드를 작성해보자.
+         그럼에도 불구하고, Express에서 정적 파일을 처리해야하는 경우에
+         코드를 작성해보자.
          */
         this.app.use(this.app.static(path.join(__dirname, 'dist')), {
             setHeaders: (res, path) => {

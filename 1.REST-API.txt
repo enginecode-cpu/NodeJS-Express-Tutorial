@@ -1,0 +1,19 @@
+test.com이 있다고 가정하자
+
+end-point는 갖게하는 게 포인트이다.
+
+test.com/user    [POST]    ->   user를 생성
+test.com/user    [PUT]     ->   user를 업데이트
+test.com/user    [DELETE]  ->   user를 삭제
+test.com/user    [PATCH]   ->   user를 새로운 사항을 작업할 때
+
+잘못된 예
+test.com/user/create
+test.com/user/update
+test.com/user/delete
+test.com/user/patch
+
+메서드로 이미 정의되어 있기 때문에 end-point를 
+여러가지로 생성할 필요가 없다.
+
+메서드를 사용하면 된다.
